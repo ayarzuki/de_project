@@ -7,6 +7,7 @@ help:
 	@echo "## spark			- Run a Spark cluster, rebuild the postgres container, then create the destination tables "
 	@echo "## jupyter			- Spinup jupyter notebook for testing and validation purposes."
 	@echo "## airflow			- Spinup airflow scheduler and webserver."
+	@echo "## metabase			- Run docker compose of metabase"
 	@echo "## clean			- Cleanup all running containers related to the challenge."
 
 docker-build:
@@ -72,6 +73,13 @@ airflow:
 	@echo 'Creating Airflow Instance ...'
 	@echo '__________________________________________________________'
 	@docker-compose -f ./docker/docker-compose-airflow.yml --env-file .env up
+	@echo '==========================================================='
+
+metabase:
+	@echo '__________________________________________________________'
+	@echo 'Creating Metabase Instance ...'
+	@echo '__________________________________________________________'
+	@docker-compose -f ./docker/docker-compose-metabase.yml --env-file .env up -d
 	@echo '==========================================================='
 
 postgres: postgres-create postgres-create-table postgres-ingest-csv

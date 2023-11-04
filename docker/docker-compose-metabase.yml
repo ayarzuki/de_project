@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    hostname: metabase
+    volumes:
+    - /dev/urandom:/dev/random:ro
+    - ../sql:/sql
+    - ../data:/data
+    ports:
+      - 3000:3000
+    networks:
+      - dataeng-network
+    healthcheck:
+      test: curl --fail -I http://localhost:3000/api/health || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dataeng-network:
+    driver: bridge
+    external: true
